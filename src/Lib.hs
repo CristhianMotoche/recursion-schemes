@@ -1,10 +1,16 @@
-module Lib
-    ( someFunc
-    , anotherFunc
-    ) where
+module Lib where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+-- | Common way to do recursion, defined explicitly
+data Expr = Const Int
+          | Add Expr Expr
+          | Mul Expr Expr
 
-anotherFunc :: IO ()
-anotherFunc = putStrLn "anotherFunc"
+print :: Expr -> String
+print (Const i) = show i
+print (Add a b) = print a ++ " + " ++ print b
+print (Mul a b) = print a ++ " * " ++ print b
+
+-- | Drawback
+--
+-- Possible errors
+-- GHC is way better in optimizing non-recursive then recursive code
